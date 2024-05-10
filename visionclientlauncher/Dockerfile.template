@@ -1,0 +1,33 @@
+# Use a base image that includes Java and support for X11
+FROM balenalib/%%BALENA_MACHINE_NAME%%-openjdk:11-jdk
+
+# Install necessary X11 and utility packages
+RUN apt-get update && apt-get install -y \
+    x11-apps xauth x11-xserver-utils \
+    libxext6 libxrender1 libxtst6 libxi6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory inside the container
+WORKDIR /opt/app
+
+# Copy the runtime and app directories into the container
+RUN mkdir ../runtime
+COPY runtime/* /opt/runtime/
+COPY app/visionclientlauncher.sh /opt/app/
+COPY app/launcher-vision-client-linux.jar /opt/app/
+
+# Ensure the script is executable
+RUN chmod +x /opt/app/visionclientlauncher.sh
+RUN chmod +x /opt/app/launcher-vision-client-linux.jar
+
+# Environment variable for Xserver
+ENV DISPLAY=:0
+
+# Command to run your application using the Bash script
+#./visionclientlauncher.sh application=myterminal window.mode=fullscreen screen=0
+#CMD [ "./opt/app/visionclientlauncher.sh", "application=myterminal", "window.mode=fullscreen", "screen=0" ]
+CMD [ "/opt/app/visionclientlauncher.sh" ]
+#CMD while ! xset -q; do sleep 0.5; done && \
+#    ./visionclientlauncher.sh application=myterminal window.mode=fullscreen screen=0
+
+

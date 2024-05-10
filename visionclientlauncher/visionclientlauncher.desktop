@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=True
+Icon=launcher.png
+Name=Vision Client Launcher
+Exec=bash -c 'cd "$(dirname "$1")/app" && ./visionclientlauncher.sh &' . %k
+Path=.

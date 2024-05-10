@@ -1,0 +1,28 @@
+version: '2.1'
+
+services:
+  xserver:
+    image: bh.cr/balenalabs/xserver-amd64  # Use the correct image for your architecture
+    restart: always
+    privileged: true
+    environment:
+      UDEV: 1
+    labels:
+      io.balena.features.dbus: "1"
+    volumes:
+      - x11:/tmp/.X11-unix
+
+  ignition-vision-client:
+    build: visionclientlauncher
+    restart: always
+    depends_on:
+      - xserver
+    environment:
+      - DISPLAY=xserver:0
+    volumes:
+      - x11:/tmp/.X11-unix
+      - data_volume:/opt/data
+
+volumes:
+  x11:  # This named volume is used for X11 socket sharing
+  data_volume:  # This named volume is used for persistent or shared data
