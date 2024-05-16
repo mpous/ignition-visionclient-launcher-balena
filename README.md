@@ -28,11 +28,15 @@ Alternatively find the application on the balena IoT Edge marketplace [balenaHub
 
 ### Run Ignition Vision Client on the balena device
 
-Get into the device on balenaCloud. Go to the Terminal and access to the service `xserver` and type `startx` on the terminal.
+Get into the device on balenaCloud. Go to the Terminal and access to the service `xserver`. In order to start the xserver server, type 
+
+```
+startx
+``` 
 
 ![Start x11 on the xserver service](https://github.com/mpous/ignition-visionclient-launcher-balena/assets/173156/9fdc7d27-9c24-412f-a84c-c088a1af42f5)
 
-Open a new tab on the Terminal and open the service `ignition-vision-client` and type 
+Now, open a new tab on the Terminal and open the service `ignition-vision-client` and type 
 
 ```
 startx ./visionclientlauncher.sh
