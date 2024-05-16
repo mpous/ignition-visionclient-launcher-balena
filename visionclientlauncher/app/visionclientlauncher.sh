@@ -1,4 +1,7 @@
-#! /bin/bash
+#!/bin/bash
+
+export DISPLAY=:0.0
+export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 ##Launches an instance of the Vision Client Launcher
 # Get the location of the script.
@@ -8,9 +11,6 @@ FIRST_ARGUMENT="$1"
 
 echo "Starting the vision client launcher script..."
 echo "${REALDIR}"
-
-# Copied from https://github.com/balena-labs-projects/xserver/blob/master/example/glxgears/entry.sh
-while [ ! -e /tmp/.X11-unix/X${DISPLAY#*:} ]; do sleep 0.5; done
 
 # Logging if error
 LAUNCHER_LOGFILE="${REALDIR}/../visionclientlauncher.log"
@@ -28,7 +28,9 @@ if [[ "${FIRST_ARGUMENT}" = "--version" ]]; then
 	exit 0;
 fi
 
-#update the .desktop icon
-#sed -i 's,Icon=launcher.png,'"Icon=${REALDIR}\/launcher.png"',' "${REALDIR}/../visionclientlauncher.desktop"
 
-APP_DIR="$REALDIR" "${REALDIR}/../runtime/bin/java" -jar "${REALDIR}/launcher-vision-client-linux.jar" "$@" >/dev/null 2>&1 &
+echo "{$DISPLAY}"
+#while [ ! -e /tmp/.X11-unix/X${DISPLAY#*:} ]; do sleep 0.5; done
+
+#APP_DIR="$REALDIR" "${REALDIR}/../runtime/bin/java" -jar "${REALDIR}/launcher-vision-client-linux.jar" "$@" >/dev/null 2>&1 &
+java -jar launcher-vision-client-linux.jar $@ >/dev/null 2>&1

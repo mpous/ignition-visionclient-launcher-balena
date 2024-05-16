@@ -1,17 +1,33 @@
 # Use a base image that includes Java and support for X11
-FROM balenalib/%%BALENA_MACHINE_NAME%%-openjdk:11-jdk
+FROM balenalib/%%BALENA_MACHINE_NAME%%-openjdk:17-jdk
 
 # Install necessary X11 and utility packages
-RUN apt-get update && apt-get install -y \
-    x11-apps xauth x11-xserver-utils \
-    libxext6 libxrender1 libxtst6 libxi6 \
-    && rm -rf /var/lib/apt/lists/*
+RUN install_packages xserver-xorg \
+  xserver-xorg-input-evdev \
+  xinit \
+  xfce4 \
+  xfce4-terminal \
+  x11-xserver-utils \
+  dbus-x11 \
+  matchbox-keyboard \
+  xterm
+
+
+# Disable screen from turning it off
+RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
+  && echo "" >> /etc/X11/xinit/xserverrc \
+  && echo 'exec /usr/bin/X -s 0 dpms' >> /etc/X11/xinit/xserverrc 
+
+ENV UDEV=1
+
+# Avoid requesting XFCE4 question on X start
+ENV XFCE_PANEL_MIGRATE_DEFAULT=1
 
 # Set the working directory inside the container
 WORKDIR /opt/app
 
 # Copy the runtime and app directories into the container
-RUN mkdir ../runtime
+#RUN mkdir ../runtime
 COPY runtime/* /opt/runtime/
 COPY app/visionclientlauncher.sh /opt/app/
 COPY app/launcher-vision-client-linux.jar /opt/app/
@@ -25,9 +41,6 @@ ENV DISPLAY=:0
 
 # Command to run your application using the Bash script
 #./visionclientlauncher.sh application=myterminal window.mode=fullscreen screen=0
-#CMD [ "./opt/app/visionclientlauncher.sh", "application=myterminal", "window.mode=fullscreen", "screen=0" ]
-CMD [ "/opt/app/visionclientlauncher.sh" ]
-#CMD while ! xset -q; do sleep 0.5; done && \
-#    ./visionclientlauncher.sh application=myterminal window.mode=fullscreen screen=0
+#CMD [ "/opt/app/visionclientlauncher.sh", "application=myterminal", "window.mode=fullscreen", "screen=0" ]
 
-
+CMD ["sleep", "infinity"]
