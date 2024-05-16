@@ -16,15 +16,14 @@ This is a prototype project to run Inductive Automation Ignition Vision Client J
 
 * [balenaEtcher](https://etcher.balena.io/) to flash the USB stick with the balenaOS image.
 
-* [Ignition SCADA license](https://hub.balena.io/apps/2048634/ignition-balena) or just use the trial demo which is free for 2 hours. After that you will need to restart the service running on the device.
 
-As usual, you have three options here. Use balenaHub, click the “Deploy with balena” button or use the balena CLI. You can do it in just one click by using the button below:
+As usual, you have three options here. Click the “Deploy with balena” button or use the balena CLI. You can do it in just one click by using the button below:
 
 [![](https://www.balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/mpous/ignition-visionclient-launcher-balena)
 
 Follow instructions, click Add a Device and flash an SD card with that OS image dowloaded from balenaCloud. Enjoy the magic 🌟Over-The-Air🌟!
 
-Alternatively find the application on the balena IoT Edge marketplace [balenaHub](https://hub.balena.io) called [ignition](https://hub.balena.io/apps/2048634/ignition-balena).
+
 
 ### Run Ignition Vision Client on the balena device
 
