@@ -27,6 +27,8 @@ Follow instructions, click Add a Device and flash an SD card with that OS image 
 
 ### Run Ignition Vision Client on the balena device
 
+Once the application has been deployed successfully on your fleet and your device, you can follow these instructions.
+
 Get into the device on balenaCloud. Go to the Terminal and access to the service `xserver`. In order to start the xserver server, type 
 
 ```
